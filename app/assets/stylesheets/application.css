@@ -11,3 +11,7 @@
  *= require_self
  *= require_tree .
  */
+
+div.nav-collapse {
+  padding-top: 10px;
+}
