@@ -46,6 +46,18 @@ describe AppointmentsController do
         
         expect(Appointment.where( {user: auth_user, country: country, position: 'citizen' } ).count).to eql(1)
       end
+
+      it "replaces a string user_id with a user_id of the specified email" do
+        auth_user.save
+        country.name ="Testlandia"
+        country.save
+        auth_appointment.save
+
+        sign_in auth_user
+        post :create, :appointment => { country_id: 'Testlandia', user_id: auth_user.id, position: 'citizen' }
+        
+        expect(Appointment.where( {user: auth_user, country: country, position: 'citizen' } ).count).to eql(1)
+      end
     end
     
 
