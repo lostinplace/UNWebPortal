@@ -28,10 +28,10 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-# Use ActiveModel has_secure_password
+#security
 gem 'bcrypt-ruby', '~> 3.1.2'
-
 gem 'devise'
+gem 'cancan'
 
 # Use unicorn as the app server
 # gem 'unicorn'

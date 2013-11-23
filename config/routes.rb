@@ -1,9 +1,12 @@
 UNWebPortal::Application.routes.draw do
 
+  resources :appointments
+
+  devise_for :views
   devise_for :users
   resources :countries
 
-  root :to => "home#index"
+  root :to => "countries#index"
   
   resources :laws
 
