@@ -12,7 +12,7 @@ FactoryGirl.define do
 
   factory :appointment do
     user
-    country Country.new
+    country
   end
 
   factory :country do
