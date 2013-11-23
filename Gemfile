@@ -42,8 +42,9 @@ gem 'cancan'
 # Use debugger
 gem 'debugger', group: [:development, :test]
 
-group :test do
-  gem 'rspec'
+group :development, :test do
+  gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'capybara-webkit'
+  gem 'factory_girl_rails'
 end

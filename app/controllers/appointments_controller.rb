@@ -1,5 +1,10 @@
 class AppointmentsController < ApplicationController
   before_action :set_appointment, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_user!, except: [:index, :show]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to action: 'index', :alert => exception.message
+  end
 
   # GET /appointments
   # GET /appointments.json
@@ -24,7 +29,16 @@ class AppointmentsController < ApplicationController
   # POST /appointments
   # POST /appointments.json
   def create
+    
+    params[:appointment][:user_id] = 
+      User.where(email: appointment_params[:user_id]).pluck(:id).first if appointment_params[:user_id].to_i == 0
+    params[:appointment][:country_id] = 
+      Country.where(name: appointment_params[:country_id]).pluck(:id).first if appointment_params[:country_id].to_i == 0
+         
     @appointment = Appointment.new(appointment_params)
+    authorize! :manage, @appointment.country, 
+      :message => "You are not authorized to manage appointments for #{@appointment.country.name}"
+
 
     respond_to do |format|
       if @appointment.save
@@ -73,6 +87,6 @@ class AppointmentsController < ApplicationController
     end
 
     def replace_values(appointment)
-      
+
     end
 end
